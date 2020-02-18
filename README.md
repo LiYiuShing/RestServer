@@ -1,2 +1,8 @@
 # jwt-node
-# RestServer
+
+# How to start?
+* code block
+  ``` javascript
+    npm start
+  ```
+  

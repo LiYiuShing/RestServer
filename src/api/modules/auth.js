@@ -1,5 +1,7 @@
 const jwt = require('jsonwebtoken');
-const { User } = require('../resources/user/user.model');
+const User = require('../resources/user/user.model');
+const dotenv = require('dotenv');
+dotenv.config();
 
 const JWT_SECRET = process.env.TOKEN_SECRET;
 
@@ -8,7 +10,7 @@ module.exports = register = (req, res) => {
     User.findOne({ email: email })
         .then(existUser => {
             if (existUser) return res.status(404).send("Email already exists")
-            let user = new User({ email, pass, ...rest })
+            let user = new User({ email, password, ...rest })
             const token = jwt.sign({ id: user._id }, JWT_SECRET, {
                 expiresIn: 7200
             })
@@ -27,11 +29,12 @@ module.exports = register = (req, res) => {
                 })
         })
         .catch(err => {
-            res.status(500).send(err)
+            res.status(500).send(err.message)
         })
 };
 
 module.exports = login = (req, res) => {
+    console.log('s')
     const { email, password } = req.body
     User.findOneAndUpdate(
         { email: email }
@@ -40,6 +43,7 @@ module.exports = login = (req, res) => {
         .exec()
         .then(user => {
             if (!user) return res.status(404).send("User does not exist")
+            console.log(user)
             user.comparePassword(password, (err, isMatch) => {
                 if (err) return res.status(500).send("Error Email OR Password!")
                 if (isMatch) {
@@ -54,10 +58,11 @@ module.exports = login = (req, res) => {
             })
         })
         .catch(err => {
-            res.status(500).send(err)
+            res.status(500).send(err.message)
         })
 };
 
+/*
 module.exports = protect = (req, res, next) => {
     if (!req.headers.authorization) {
         return res.status(400).send("Bad request")
@@ -69,3 +74,4 @@ module.exports = protect = (req, res, next) => {
         next()
     })
 }
+*/

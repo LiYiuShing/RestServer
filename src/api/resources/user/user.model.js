@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const bcypt = require('bcryptjs');
 const SALT = 10;
 
-module.exports = schema = {
+const schema = {
     userId: {
         sparse: true,
         type: String,
@@ -42,19 +42,21 @@ module.exports = schema = {
     token: {
         type: String,
         require: false
-    },
+    }
+    /*
     trips: [
         {
             ref: "Trip",
             type: Object
         }
     ]
+    */
 };
 
 const userSchema = new Schema(schema, { timestamps: true });
 
 //HASH PASSWORD
-userSchema.pre('save', (next) => {
+userSchema.pre('save', function(next) {
     const user = this
     if (!user.isModified('password')) return next()
 
@@ -70,7 +72,7 @@ userSchema.pre('save', (next) => {
 });
 
 //ComparePassword
-userSchema.method.comparePassword = (password, cb) => {
+userSchema.methods.comparePassword = function(password, cb) {
     bcypt.compare(password, this.password, (err, isMatch) => {
         if(err) return cb(err)
         cb(null, isMatch)
@@ -89,7 +91,7 @@ userSchema.set('toJSON', {
             subscribeId: ret.subscribeId,
             subscribeDate: ret.subscribeDate,
             token: ret.token, 
-            trips: resizeBy.trips,
+            //trips: resizeBy.trips,
             id: ret._id
         }
         return retJson

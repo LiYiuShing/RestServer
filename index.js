@@ -17,11 +17,9 @@ dotenv.config();
 connect();
 
 //Middleware
-app.use(bodyParser.json());
 app.use(cors());
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 //Route Middleware
 app.use('/api', restRoute);
