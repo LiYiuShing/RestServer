@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const User = require('../src/api/modules/user/user.model');
+const User = require('../src/api/resources/user/user.model');
 
 const bcrypt = require('bcryptjs');
 

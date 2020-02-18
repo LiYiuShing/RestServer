@@ -1,11 +1,13 @@
 const express = require("express");
-const router = express.Router();
+const restRourer = express.Router();
 
-const { userRouter } = require('./resources/user');
+const userRouter = require('./resources/user/user.restRouter');
 
 //Auth
-restRourer.route('/register').post(register);
-restRourer.route('/login').post(register);
+//restRourer.route('/register').post(register);
+//restRourer.route('/login').post(register);
 
-export const restRourer = express.Router();
+//
+restRourer.get('/users', userRouter)
 
+module.exports = restRourer;

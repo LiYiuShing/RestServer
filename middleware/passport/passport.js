@@ -12,7 +12,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 const secret_Key = process.env.TOKEN_SECRET;
 
-const User = require('../../src/api/modules/user/user.model');
+const User = require('../../src/api/resources/user/user.model');
 
 const checkPassword = (user, password) => bcrypt
     .compare(password, user.password)
