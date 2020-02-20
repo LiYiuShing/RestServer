@@ -11,7 +11,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-const resetURL = (user, token) => `http://localhost:3000/resetPassword/${user._id}/${token}`;
+const resetURL = (user, token) => `http://localhost:3000/api/resetPassword/${user._id}/${token}`;
 
 
 const template = (user, url) => {

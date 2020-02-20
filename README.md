@@ -11,14 +11,14 @@
     $ yarn start
   ```
 
-### ENV Setting
+## ENV Variables
 Config the following variable into .env file
   ```
     DB_CONNECT = 'MongoDb connection link'
     TOKEN_SECRET = 'TOKEN SECRET'
     SESSION_SECRET = 'SESSION SECRET'
-    EMAIL_LOGIN = 'Your Email Address'
-    EMAIL_PASSWORD = 'Your Email Address'
+    EMAIL_LOGIN = 'Your Gmail Address'
+    EMAIL_PASSWORD = 'Your Gmail Address'
   ```
 
 ## API
@@ -49,9 +49,10 @@ A cross-platform document-oriented database program. Classified as a NoSQL datab
 A compact URL-safe means of representing claims to be transferred between two parties. 
 
 #### cors
-Used to configure API security
+Used to configure API security.
 
 #### dotenv
-Load environment variables from a .env file into process.env
+Load environment variables from a .env file into process.env.
 
-  
+#### nodemailer
+A module for Node.js to send emails.

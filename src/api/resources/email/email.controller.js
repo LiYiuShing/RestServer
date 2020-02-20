@@ -43,9 +43,29 @@ const sendEmail = async(req, res) => {
     })
 };
 
-/*
 const setNewPassword = (req, res) => {
-}
-*/
+    const { userId, token } = req.params
+    const { password } = req.body
 
-module.exports = email = { sendEmail }
+    User.findOne({ _id: userId })
+        .then(user => {
+            const secret = user.password + "-" + user.dateCreate
+            const payload = jwt.decode(token, secret)
+            if(payload.userId === user.id ) {
+                bcypt.genSalt(10, (err, salt) => {
+                    if (err) { res.status(500).json(err.message) } 
+                    bcypt.hash(password, salt, (err, hashpassword) => {
+                        if (err) { res.status(500).json(err.message) }
+                        User.findOneAndUpdate({_id: userId}, {password: hashpassword})
+                            .then(() => res.status(202).send('Sucessful'))
+                            .catch(err => res.status(500).json(err.message))
+                    })
+                })
+            }
+        })
+        .catch(err => {
+            res.status(404).json(err.message)
+        })
+}
+
+module.exports = email = { sendEmail, setNewPassword }
