@@ -1,0 +1,33 @@
+const nodemailer = require('nodemailer');
+
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: process.env.EMAIL_LOGIN,
+    pass: process.env.EMAIL_PASSWORD,
+  },
+});
+
+const resetURL = (user, token) => `http://localhost:3000/resetPassword/${user._id}/${token}`;
+
+
+const template = (user, url) => {
+  const from = process.env.EMAIL_LOGIN;
+  const to = user.email;
+  const subject = 'Reset Password';
+  const content = `
+  <p> Hello ${user.email} </p>
+  <p> You have requested a reset of your account password.</p>
+  <p> Please use the following link to reset your password</p>
+  <a href=${url}>${url}</a>
+  <p> This link will expire within 1 hour </p>
+`;
+
+  return {from, to, subject, content};
+};
+
+module.exports = resetPasswordEmail = {
+  transporter,
+  resetURL,
+  template
+}

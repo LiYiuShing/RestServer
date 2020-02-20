@@ -1,6 +1,6 @@
 const { User } = require('./user.model');
 
-module.exports = getAllUsers = (req, res) => {
+const getAllUsers = (req, res) => {
     User.find({})
         .then(users => {
             res.status(200).json(users)
@@ -10,7 +10,7 @@ module.exports = getAllUsers = (req, res) => {
         })
 };
 
-module.exports = getOneUser = (req, res) => {
+const getOneUser = (req, res) => {
     User.findOne({ _id: req.params.id })
         .populate("trips")
         .exec()
@@ -23,7 +23,7 @@ module.exports = getOneUser = (req, res) => {
 };
 
 
-module.exports = createUser = (req, res) => {
+const createUser = (req, res) => {
     const newUser = new User(req.body)
     User.findOne({ email: req.body.email })
         .then(user => {
@@ -41,7 +41,7 @@ module.exports = createUser = (req, res) => {
         })
 };
 
-module.exports = updateUser = (req, res) => {
+const updateUser = (req, res) => {
     const id = req.params.id
     const update = req.body
 
@@ -64,7 +64,7 @@ module.exports = updateUser = (req, res) => {
 };
 
 
-module.exports = deleteUser = (req, res) => {
+const deleteUser = (req, res) => {
     User.findOneAndDelete({ _id: req.params.id })
         .then(user => {
             if (!user) return res.status(404).json("User Not found")
@@ -78,3 +78,11 @@ module.exports = deleteUser = (req, res) => {
             res.status(500).send(err)
         })
 };
+
+module.exports = userController = {
+    getAllUsers,
+    getOneUser,
+    createUser,
+    updateUser,
+    deleteUser
+}

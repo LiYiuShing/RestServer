@@ -1,4 +1,4 @@
-# Rest API - Authentication
+# REST API - Authentication
 
 ## Quick Start
 1. Put your environment variables at .env
