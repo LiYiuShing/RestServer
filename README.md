@@ -11,6 +11,16 @@
     $ yarn start
   ```
 
+### ENV Setting
+Config the following variable into .env file
+  ```
+    DB_CONNECT = 'MongoDb connection link'
+    TOKEN_SECRET = 'TOKEN SECRET'
+    SESSION_SECRET = 'SESSION SECRET'
+    EMAIL_LOGIN = 'Your Email Address'
+    EMAIL_PASSWORD = 'Your Email Address'
+  ```
+
 ## API
 | Method | Endpoint | Request | Reponse |
 | ------ | ------ | ----- | ------- |
@@ -22,6 +32,7 @@
 | GET   | /api/:id/getOneUser | | |
 | PUT   | /api/:id/updateUser | | |
 | DELETE   | /api/:id/deleteUser | | |
+| POST | /api/resetPassword/user/:email | | |
 
 ## Dependencies
 
