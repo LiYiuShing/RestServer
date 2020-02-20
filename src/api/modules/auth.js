@@ -5,7 +5,7 @@ dotenv.config();
 
 const JWT_SECRET = process.env.TOKEN_SECRET;
 
-module.exports = register = (req, res) => {
+const register = (req, res) => {
     const { email, password, ...rest } = req.body
     User.findOne({ email: email })
         .then(existUser => {
@@ -33,7 +33,7 @@ module.exports = register = (req, res) => {
         })
 };
 
-module.exports = login = (req, res) => {
+const login = (req, res) => {
     console.log('s')
     const { email, password } = req.body
     User.findOneAndUpdate(
@@ -43,7 +43,6 @@ module.exports = login = (req, res) => {
         .exec()
         .then(user => {
             if (!user) return res.status(404).send("User does not exist")
-            console.log(user)
             user.comparePassword(password, (err, isMatch) => {
                 if (err) return res.status(500).send("Error Email OR Password!")
                 if (isMatch) {
@@ -62,8 +61,37 @@ module.exports = login = (req, res) => {
         })
 };
 
-/*
-module.exports = protect = (req, res, next) => {
+
+const changePassword = async (req, res) => {
+    const { email, password, newPassword } = req.body
+    User.findOne({ email: email })
+        .then(user => {
+            if (!user) return res.status(404).send("User does not exist")
+            user.comparePassword(password, (err, isMatch) => {
+                if (err) return res.status(401).send("Unauthorized")
+                if (isMatch) {
+                    user.password = newPassword
+                    user.save()
+                        .then(updatedUser => {
+                            res.status(200).send(updatedUser)
+                        })
+                        .catch(err => {
+                            const message = err.message
+                            res.status(500).json({
+                            status: 'Change Password Failed',
+                            msg: message
+                            })
+                        })
+                }
+            })
+        })
+        .catch(err => {
+            res.status(500).send(err.message)
+        })
+};
+
+
+const protect = (req, res, next) => {
     if (!req.headers.authorization) {
         return res.status(400).send("Bad request")
     }
@@ -74,4 +102,6 @@ module.exports = protect = (req, res, next) => {
         next()
     })
 }
-*/
+
+
+module.exports = auth = {register, login, changePassword, protect};
