@@ -43,14 +43,7 @@ const schema = {
         type: String,
         require: false
     }
-    /*
-    trips: [
-        {
-            ref: "Trip",
-            type: Object
-        }
-    ]
-    */
+
 };
 
 const userSchema = new Schema(schema, { timestamps: true });
@@ -91,7 +84,6 @@ userSchema.set('toJSON', {
             subscribeId: ret.subscribeId,
             subscribeDate: ret.subscribeDate,
             token: ret.token, 
-            //trips: resizeBy.trips,
             id: ret._id
         }
         return retJson

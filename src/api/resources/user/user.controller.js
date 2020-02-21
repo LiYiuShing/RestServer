@@ -12,7 +12,6 @@ const getAllUsers = (req, res) => {
 
 const getOneUser = (req, res) => {
     User.findOne({ _id: req.params.id })
-        .populate("trips")
         .exec()
         .then(user => {
             res.status(200).json(user)
@@ -49,7 +48,6 @@ const updateUser = (req, res) => {
     User.findOneAndUpdate({ _id: id}, update)
         .then(oldUser => {
             User.findOne({ _id: oldUser.id })
-                .populate("trips")
                 .exec()
                 .then(newUser => {
                     res.status(200).json(newUser)
