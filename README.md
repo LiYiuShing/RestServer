@@ -33,6 +33,7 @@ Config the following variable into .env file
 | PUT   | /api/:id/updateUser | | |
 | DELETE   | /api/:id/deleteUser | | |
 | POST | /api/resetPassword/user/:email | | |
+| POST | /api/resetPassword/:userId/:token | | |
 
 ## Dependencies
 
